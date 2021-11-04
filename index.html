@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample Site</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        var data = eval(#data#)
+        const myfunction = () => {
+            try {
+                var url = "http://localhost:8080/save";
+                var form = new FormData()
+                let id = "";
+                for (let fileIndex = 0; fileIndex < data.length; fileIndex++) {
+                    for (let keyIndex = 0; keyIndex < data[fileIndex].missingKeys.length; keyIndex++) {
+                        id = `${data[fileIndex].name}#/#${data[fileIndex].missingKeys[keyIndex]}`
+                        form.append(id, document.getElementById(id).value)
+                    }
+                }
+                fetch(url, {
+                    method: 'POST',
+                    body: form
+                })
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+        console.log("Start", data)
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <div>
+                <h2>Table</h2>
+                <button onclick="myfunction()">Save me from missing keys</button>
+            </div>
+            <br>
+            <div style="margin: 5px; width: 100%;">
+                #Table#
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
